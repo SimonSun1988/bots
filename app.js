@@ -2,10 +2,11 @@
 /*
  * 處理 ssl 相關事務
  */
+const config = require('./config.js');
 const fs = require('fs');
 const https = require('https');
-const sslKey = fs.readFileSync('./ssl/XXX.key', 'utf8');
-const sslCrt = fs.readFileSync('./ssl/real.crt', 'utf8');
+const sslKey = fs.readFileSync(config.ssl.key, 'utf8');
+const sslCrt = fs.readFileSync(config.ssl.cert, 'utf8');
 const sslOptions = {
     key: sslKey,
     cert: sslCrt
@@ -17,12 +18,16 @@ const sslOptions = {
  */
 const express = require('express');
 const app = express();
+
+/*
+ * Line Bot 會用到的相關端點
+ */
 const lineBot = require('./lineBot');
 
 /*
- * 處理 router
+ * Routers
  */
-app.get('/line/test', lineBot.test);
+app.post('/line/callback', lineBot.callback);
 
 /*
  * 啟動 server

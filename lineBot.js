@@ -1,10 +1,12 @@
 
+
+
 module.exports = {
 
     /*
-     * 用來註冊 line bot 驗證網址用的
+     * Line channal 傳過來的資料
      */
-    test: function(req, res, next) {
+    callback: function(req, res, next) {
         res.status(200);
         return res.send('ok');
     },
