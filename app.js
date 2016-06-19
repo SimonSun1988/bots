@@ -17,12 +17,12 @@ const sslOptions = {
  */
 const express = require('express');
 const app = express();
-const lintBot = require('./lineBot');
+const lineBot = require('./lineBot');
 
 /*
  * 處理 router
  */
-app.get('/', lintBot);
+app.get('/line/test', lineBot.test);
 
 /*
  * 啟動 server
