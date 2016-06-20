@@ -1,5 +1,6 @@
 
-
+let fetch = require('node-fetch');
+let config = require('./config');
 
 module.exports = {
 
@@ -45,8 +46,29 @@ module.exports = {
                 };
         }
 
-        res.status(200);
-        return res.send('ok');
-    },
+        let options = {
+            method: 'POST',
+            body: {
+                'to': [fromWho],
+                'toChannel': toChannel,
+                'eventType': eventType,
+                'content': content
+            },
+            headers: {
+                'Content-Type': 'application/json; charser=UTF-8',
+                'X-Line-ChannelID': config.line.channelId,
+                'X-Line-ChannelSecret': config.line.channelSecret,
+                'X-Line-Trusted-User-With-ACL': config.line.channelMID
+            },
+        };
 
+        fetch('https://trialbot-api.line.me/v1/events', options)
+            .then(function() {
+                return res.status(200).send();
+            })
+            .catch(function(err) {
+                console.log(err);
+                return res.status(400).send();
+            });
+    }
 };
