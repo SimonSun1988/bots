@@ -52,7 +52,8 @@ module.exports = {
             uri: 'https://trialbot-api.line.me/v1/events',
             body: {
                 to: [fromWho],
-                toChannel: toChannel,
+                toChannel: '1383378250',
+                // toChannel: toChannel,
                 eventType: eventType,
                 content: content
             },
