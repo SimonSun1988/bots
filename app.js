@@ -27,7 +27,10 @@ const lineBot = require('./lineBot');
 /*
  * Routers
  */
-app.post('/line/callback', lineBot.callback);
+app.post('/line/callback', function(req, res, next) {
+    console.log(req.body);
+    return res.send(200);
+});
 
 /*
  * 啟動 server
