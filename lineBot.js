@@ -62,13 +62,16 @@ module.exports = {
             },
         };
 
+        console.log(options);
+
         fetch('https://trialbot-api.line.me/v1/events', options)
-            .then(function() {
-                return res.status(200).send();
+            .then(function(res) {
+                return res.json();
+                // return res.status(200).send();
             })
-            .catch(function(err) {
-                console.log(err);
-                return res.status(400).send();
+            .then(function(json) {
+                console.log(json);
+                return res.sendStatus(200);
             });
     }
 };
