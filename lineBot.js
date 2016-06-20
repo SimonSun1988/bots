@@ -49,6 +49,7 @@ module.exports = {
 
         let options = {
             method: 'POST',
+            uri: 'https://trialbot-api.line.me/v1/events',
             body: {
                 to: [fromWho],
                 toChannel: toChannel,
