@@ -62,6 +62,7 @@ module.exports = {
                 'X-Line-ChannelSecret': config.line.channelSecret,
                 'X-Line-Trusted-User-With-ACL': config.line.channelMID
             },
+            json: true
         };
 
         request(options)
