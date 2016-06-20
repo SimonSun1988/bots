@@ -1,7 +1,6 @@
 
-let fetch = require('node-fetch');
+let request = require('request-promise');
 let config = require('./config');
-let formData = require('form-data');
 
 module.exports = {
 
@@ -20,9 +19,6 @@ module.exports = {
         let content;
         switch(contentType) {
             case 1:
-                // content.append('toType', 1);
-                // content.append('contentType', 1);
-                // content.append('text', '你傳文字訊息給我');
                 content = {
                     toType: 1,
                     contentType: 1,
@@ -30,9 +26,6 @@ module.exports = {
                 };
                 break;
             case 2:
-                // content.append('toType', 1);
-                // content.append('contentType', 1);
-                // content.append('text', '你傳照片給我');
                 content = {
                     toType: 1,
                     contentType: 1,
@@ -40,9 +33,6 @@ module.exports = {
                 };
                 break;
             case 8:
-                // content.append('toType', 1);
-                // content.append('contentType', 1);
-                // content.append('text', '你傳貼圖給我');
                 content = {
                     toType: 1,
                     contentType: 1,
@@ -50,9 +40,6 @@ module.exports = {
                 };
                 break;
             default:
-                // content.append('toType', 1);
-                // content.append('contentType', 1);
-                // content.append('text', '我現在分別不出來你傳什麼碗糕給我');
                 content = {
                     toType: 1,
                     contentType: 1,
@@ -60,17 +47,14 @@ module.exports = {
                 };
         }
 
-        let bodyData = new formData();
-        bodyData.append('to', [fromWho]);
-        bodyData.append('toChannel', toChannel);
-        bodyData.append('eventType', eventType);
-        bodyData.append('content', content);
-
-        console.log(bodyData);
-
         let options = {
             method: 'POST',
-            body: bodyData,
+            body: {
+                to: [fromWho],
+                toChannel: toChannel,
+                eventType: eventType,
+                content: content
+            },
             headers: {
                 'Content-Type': 'application/json; charser=UTF-8',
                 'X-Line-ChannelID': config.line.channelId,
@@ -78,8 +62,6 @@ module.exports = {
                 'X-Line-Trusted-User-With-ACL': config.line.channelMID
             },
         };
-
-        console.log(options);
 
         fetch('https://trialbot-api.line.me/v1/events', options)
             .then(function(res) {
@@ -89,6 +71,10 @@ module.exports = {
             .then(function(json) {
                 console.log(json);
                 return res.sendStatus(200);
+            })
+            .catch(function(error) {
+                console.log(error);
+                return res.sendStatus(400);
             });
     }
 };
