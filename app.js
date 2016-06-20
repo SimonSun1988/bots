@@ -2,12 +2,12 @@
 /*
  * 處理 ssl 相關事務
  */
-const config = require('./config.js');
-const fs = require('fs');
-const https = require('https');
-const sslKey = fs.readFileSync(config.ssl.key, 'utf8');
-const sslCrt = fs.readFileSync(config.ssl.cert, 'utf8');
-const sslOptions = {
+let config = require('./config.js');
+let fs = require('fs');
+let https = require('https');
+let sslKey = fs.readFileSync(config.ssl.key, 'utf8');
+let sslCrt = fs.readFileSync(config.ssl.cert, 'utf8');
+let sslOptions = {
     key: sslKey,
     cert: sslCrt
 };
@@ -16,13 +16,20 @@ const sslOptions = {
 /*
  * server
  */
-const express = require('express');
-const app = express();
+let express = require('express');
+let app = express();
+
+/*
+ * body parser 很重要，我卡了半天 Orz
+ */
+let bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /*
  * Line Bot 會用到的相關端點
  */
-const lineBot = require('./lineBot');
+let lineBot = require('./lineBot');
 
 /*
  * Routers
@@ -35,6 +42,6 @@ app.post('/line/callback', function(req, res, next) {
 /*
  * 啟動 server
  */
-const httpsServer = https.createServer(sslOptions, app);
+let httpsServer = https.createServer(sslOptions, app);
 httpsServer.listen(3000);
 console.log('Listen https server at port 3000');

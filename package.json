@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/SimonSun1988/bots#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "node-fetch": "^1.5.3"
   }
