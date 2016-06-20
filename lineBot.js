@@ -2,6 +2,12 @@
 let request = require('request-promise');
 let config = require('./config');
 
+/*
+ * 這兩個值是固定的，一定要固定唷
+ */
+const eventType = '138311608800106203';
+const toChannel = '1383378250';
+
 module.exports = {
 
     /*
@@ -12,9 +18,6 @@ module.exports = {
         let data = req.body.result[0]; // 從 channal post 過來的資料
         let contentType = data.content.contentType; // 傳過來的資料類型
         let fromWho = data.content.from; // 誰傳過來的
-        let toChannel = data.toChannel; // 哪個 channel
-        const eventType = '138311608800106203'; // 固定的值(我原本以為是隨機的，直到我膝蓋中了一箭)
-
 
         let content;
         switch(contentType) {
@@ -52,8 +55,7 @@ module.exports = {
             uri: 'https://trialbot-api.line.me/v1/events',
             body: {
                 to: [fromWho],
-                toChannel: '1383378250',
-                // toChannel: toChannel,
+                toChannel: toChannel,
                 eventType: eventType,
                 content: content
             },
@@ -68,7 +70,6 @@ module.exports = {
 
         request(options)
             .then(function (body) {
-                console.log(body);
                 return res.status(200).send();
             })
             .catch(function (err) {
