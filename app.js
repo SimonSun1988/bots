@@ -36,7 +36,7 @@ let facebookBot = require('./facebookBot');
  * Routers
  */
 app.post('/line/callback', lineBot.callback);
-app.post('/facebook/callback', facebookBot.callback);
+app.get('/facebook/callback', facebookBot.callback);
 
 /*
  * 啟動 server
