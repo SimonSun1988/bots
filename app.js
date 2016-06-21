@@ -30,11 +30,13 @@ app.use(bodyParser.json());
  * Line Bot 會用到的相關端點
  */
 let lineBot = require('./lineBot');
+let facebookBot = require('./facebookBot');
 
 /*
  * Routers
  */
 app.post('/line/callback', lineBot.callback);
+app.post('/facebook/callback', facebookBot.callback);
 
 /*
  * 啟動 server

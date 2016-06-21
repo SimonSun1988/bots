@@ -15,10 +15,12 @@ module.exports = {
      */
     callback: function(req, res, next) {
 
+        // 1. 處理 line 傳過來的訊息
         let data = req.body.result[0]; // 從 channal post 過來的資料
         let contentType = data.content.contentType; // 傳過來的資料類型
         let fromWho = data.content.from; // 誰傳過來的
 
+        // 2. 分辨不同的內容
         let content;
         switch(contentType) {
             case 1:
@@ -50,6 +52,7 @@ module.exports = {
                 };
         }
 
+        // 3. 組成回傳的物件
         let options = {
             method: 'POST',
             uri: 'https://trialbot-api.line.me/v1/events',
@@ -68,6 +71,7 @@ module.exports = {
             json: true
         };
 
+        // 4. 回傳的訊息
         request(options)
             .then(function (body) {
                 return res.status(200).send();
