@@ -21,12 +21,12 @@ module.exports = {
      */
     callback: function(req, res, next) {
 
-        // 處理傳進來的訊息
+        // 1. 處理傳進來的訊息
         let messaging_events = req.body.entry[0].messaging; // 訊息的內容
         let sender; // 送出訊息的人
         let recipient; // 收到訊息的人
 
-        // 處理發訊息，收訊息，訊息的內容
+        // 2. 處理發訊息，收訊息，訊息的內容
         for(let i = 0; i < messaging_events.length; i++) {
             let event = req.body.entry[0].messaging[i];
             sender = event.sender.id;
@@ -36,12 +36,12 @@ module.exports = {
             }
         }
 
-        // 要送出去的訊息格式
+        // 3. 要送出去的訊息格式
         let messageData = {
             text: 'JavaScript 好棒棒'
         };
 
-        //  訊息選項
+        // 4. 訊息選項
         let options = {
             method: 'POST',
             uri: 'https://graph.facebook.com/v2.6/me/messages',
@@ -57,7 +57,7 @@ module.exports = {
             json: true
         };
 
-        // 送出訊息
+        // 5. 送出訊息
         request(options)
             .then(function (body) {
                 return res.status(200).send();
