@@ -5,7 +5,7 @@ let config = require('./config');
 module.exports = {
 
     /*
-     * Facebook message 傳過來的資料
+     * 驗證 Facebook message webhook
      */
     verify: function(req, res, next) {
         // 驗證這個 url 是否正確
