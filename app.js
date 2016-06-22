@@ -30,6 +30,10 @@ app.use(bodyParser.json());
  * Line Bot 會用到的相關端點
  */
 let lineBot = require('./lineBot');
+
+/*
+ * Facebook Bot 會用到的相關端點
+ */
 let facebookBot = require('./facebookBot');
 
 /*
