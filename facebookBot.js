@@ -7,14 +7,19 @@ module.exports = {
     /*
      * Facebook message 傳過來的資料
      */
-    callback: function(req, res, next) {
-
+    verify: function(req, res, next) {
         // 驗證這個 url 是否正確
-        // if (req.query['hub.verify_token'] === '阿不就好棒棒') {
-        //     res.send(req.query['hub.challenge']);
-        // } else {
-        //     res.send('Error, wrong validation token');    
-        // }
+        if (req.query['hub.verify_token'] === '阿不就好棒棒') {
+            return res.send(req.query['hub.challenge']);
+        } else {
+            return res.send('Error, wrong validation token');    
+        }
+    },
+
+    /*
+     * Facebook message
+     */
+    callback: function(req, res, next) {
 
         // 處理傳進來的訊息
         let messaging_events = req.body.entry[0].messaging; // 訊息的內容
