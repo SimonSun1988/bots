@@ -19,7 +19,7 @@ module.exports = {
 
         // 1. 處理 line 傳過來的訊息
         let data = req.body.result[0]; // 從 channal post 過來的資料
-        let text = data.text || '這不是文字訊息 Q____________Q'; // 得到的訊息資料
+        let text = data.content.text || '這不是文字訊息 Q____________Q'; // 得到的訊息資料
         let contentType = data.content.contentType; // 傳過來的資料類型
         let fromWho = data.content.from; // 誰傳過來的
 
@@ -83,13 +83,16 @@ module.exports = {
             uri: 'https://hooks.slack.com/services/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',
             body: {
                 text: 'test line to slack'
-            }
+            },
+            headers: {
+                'Content-Type': 'application/json; charser=UTF-8'
+            },
         };
 
         co(function*() {
             let results = yield [
                 request(options),
-                request(slackOptions)
+                // request(slackOptions)
             ];
 
             return Promise.resolve(results);
