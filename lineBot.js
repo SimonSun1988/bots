@@ -81,7 +81,7 @@ module.exports = {
         let slackOptions = {
             method: 'POST',
             uri: 'https://hooks.slack.com/services/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',
-            body: JSON.stringify(text),
+            body: JSON.stringify({text: text}),
             headers: {
                 'Content-Type': 'application/json; charser=UTF-8'
             },
