@@ -1,6 +1,7 @@
 
 let request = require('request-promise');
 let config = require('./config');
+let co = require('co');
 
 /*
  * 這兩個值是固定的，一定要固定唷
@@ -19,6 +20,8 @@ module.exports = {
         let data = req.body.result[0]; // 從 channal post 過來的資料
         let contentType = data.content.contentType; // 傳過來的資料類型
         let fromWho = data.content.from; // 誰傳過來的
+
+        console.log(data);
 
         // 2. 分辨不同的內容
         let content;
@@ -71,14 +74,29 @@ module.exports = {
             json: true
         };
 
-        // 4. 回傳的訊息
-        request(options)
-            .then(function (body) {
-                return res.status(200).send();
-            })
-            .catch(function (err) {
-                console.log(err);
-                return res.status(400).send();
-            });
+        //  Slack webhook
+        let slackOptions = {
+            method: 'POST',
+            uri: 'https://hooks.slack.com/services/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',
+            body: {
+                text: 'test line to slack'
+            }
+        };
+
+        co(function*() {
+            yield [
+                request(options),
+                request(slackOptions)
+            ];
+        })
+        .then(function(results) {
+            console.log(results[0]);
+            console.log(results[1]);
+            return res.status(200).send();
+        })
+        .catch(function(err) {
+            console.log(err);
+            return res.status(400).send();
+        });
     }
 };

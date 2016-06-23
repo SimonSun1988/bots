@@ -24,6 +24,7 @@
   "homepage": "https://github.com/SimonSun1988/bots#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "co": "^4.6.0",
     "express": "^4.14.0",
     "request-promise": "^3.0.0"
   }
