@@ -2,6 +2,7 @@
 let request = require('request-promise');
 let config = require('./config');
 let co = require('co');
+let Promise = require('bluebird');
 
 /*
  * 這兩個值是固定的，一定要固定唷
@@ -18,6 +19,7 @@ module.exports = {
 
         // 1. 處理 line 傳過來的訊息
         let data = req.body.result[0]; // 從 channal post 過來的資料
+        let text = content.text || '這不是文字訊息 Q____________Q'; // 得到的訊息資料
         let contentType = data.content.contentType; // 傳過來的資料類型
         let fromWho = data.content.from; // 誰傳過來的
 
@@ -84,10 +86,12 @@ module.exports = {
         };
 
         co(function*() {
-            yield [
+            let results = yield [
                 request(options),
                 request(slackOptions)
             ];
+
+            return Promise.resolve(results);
         })
         .then(function(results) {
             console.log(results[0]);
