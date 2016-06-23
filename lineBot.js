@@ -92,7 +92,7 @@ module.exports = {
         co(function*() {
             let results = yield [
                 request(options),
-                // request(slackOptions)
+                request(slackOptions)
             ];
 
             return Promise.resolve(results);
