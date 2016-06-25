@@ -23,5 +23,12 @@ module.exports = {
      */
     facebook: {
         accessToken: 'Your facebook access_token'
+    },
+
+    /*
+     * slack webhook
+     */
+    slack: {
+        webhook: 'Your slack webhook url'
     }
 };
